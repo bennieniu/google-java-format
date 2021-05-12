@@ -15,7 +15,6 @@
 package com.google.googlejavaformat.java.javadoc;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.collect.Comparators.max;
 import static com.google.common.collect.Sets.immutableEnumSet;
 import static com.google.googlejavaformat.java.javadoc.JavadocWriter.AutoIndent.AUTO_INDENT;
 import static com.google.googlejavaformat.java.javadoc.JavadocWriter.AutoIndent.NO_AUTO_INDENT;
@@ -271,6 +270,17 @@ final class JavadocWriter {
 
   private void requestWhitespace(RequestedWhitespace requestedWhitespace) {
     this.requestedWhitespace = max(requestedWhitespace, this.requestedWhitespace);
+  }
+
+  /**
+   * this method is copy from {@link com.google.common.collect.Comparators#max(Comparable, Comparable)},
+   * because origin method is error in version.
+   * @param a first value to compare, returned if greater than or equal to b.
+   * @param b second value to compare.
+   * @throws RuntimeException Execution failed, please check the log
+   */
+  private static <T extends Comparable<? super T>> T max(T a, T b) {
+    return (a.compareTo(b) >= 0) ? a : b;
   }
 
   /**
